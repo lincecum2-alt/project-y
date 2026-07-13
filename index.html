@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0f14" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <title>Project Y Dashboard</title>
+  <style>
+    :root {
+      --bg:#0b0f14; --panel:#121923; --panel2:#172131; --text:#eef4fb;
+      --muted:#9fb0c3; --line:#263448; --good:#28c76f; --warn:#f6c344;
+      --bad:#ff5c5c; --accent:#5aa9ff;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg); color:var(--text); line-height:1.45;
+    }
+    .wrap { max-width:880px; margin:auto; padding:18px 14px 48px; }
+    header { display:flex; justify-content:space-between; align-items:end; gap:10px; margin-bottom:14px; }
+    h1 { font-size:26px; margin:0; }
+    .asof { color:var(--muted); font-size:13px; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:16px; margin-bottom:12px; }
+    .metric { font-size:28px; font-weight:750; }
+    .label { color:var(--muted); font-size:13px; }
+    .good { color:var(--good); } .warn { color:var(--warn); } .bad { color:var(--bad); }
+    h2 { font-size:18px; margin:0 0 12px; }
+    h3 { font-size:15px; margin:14px 0 6px; }
+    table { width:100%; border-collapse:collapse; font-size:14px; }
+    th, td { padding:10px 6px; border-bottom:1px solid var(--line); text-align:left; vertical-align:middle; }
+    th { color:var(--muted); font-weight:600; }
+    .score { font-weight:750; font-size:16px; }
+    .pill { display:inline-block; padding:3px 8px; border-radius:999px; background:var(--panel2); font-size:12px; }
+    .news { padding:12px 0; border-bottom:1px solid var(--line); }
+    .news:last-child { border-bottom:0; }
+    .news .impact { color:var(--accent); font-weight:650; margin-top:6px; }
+    .action { display:grid; grid-template-columns:80px 1fr; gap:8px; margin:8px 0; }
+    .action b { color:var(--muted); }
+    footer { color:var(--muted); font-size:12px; margin-top:18px; }
+    @media (max-width:620px) {
+      .grid { grid-template-columns:1fr 1fr; }
+      .metric { font-size:24px; }
+      table { font-size:13px; }
+      th:nth-child(4), td:nth-child(4) { display:none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="label">坂田家 資産運用ダッシュボード</div>
+      <h1>Project Y</h1>
+    </div>
+    <div class="asof" id="asof"></div>
+  </header>
+
+  <section class="grid">
+    <div class="card">
+      <div class="label">投資口座総資産</div>
+      <div class="metric" id="assets"></div>
+      <div id="assetsNote" class="label"></div>
+    </div>
+    <div class="card">
+      <div class="label">Market Score</div>
+      <div class="metric" id="marketScore"></div>
+      <div id="marketLabel" class="label"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Today's Market</h2>
+    <div id="news"></div>
+  </section>
+
+  <section class="card">
+    <h2>今買うべき TOP10</h2>
+    <table>
+      <thead><tr><th>順位</th><th>銘柄</th><th>Buy</th><th>前回比</th><th>状態</th></tr></thead>
+      <tbody id="ranking"></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>保有資産診断</h2>
+    <table>
+      <thead><tr><th>資産</th><th>Buy</th><th>Sell</th><th>コメント</th></tr></thead>
+      <tbody id="portfolio"></tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2>今日の行動</h2>
+    <div id="actions"></div>
+  </section>
+
+  <section class="card">
+    <h2>Project Y コメント</h2>
+    <div id="comment"></div>
+  </section>
+
+  <footer>
+    現在は手動更新版。株価・ニュース・スコアの自動更新は次段階で実装します。
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  asOf: "2026-07-13 18:00",
+  assets: 25461346,
+  assetsNote: "最新ユーザー提供スナップショット",
+  marketScore: 74,
+  marketLabel: "やや慎重",
+  news: [
+    {
+      title: "半導体株は大きく調整",
+      fact: "国内半導体関連は戻り売りが優勢。221Aは直近1か月で大幅下落。",
+      impact: "Project Y：AI需要の崩壊ではなく期待値調整と判断。ただし現金比率を高めるため、戻り局面で一部売却を継続。"
+    },
+    {
+      title: "NASDAQ100を一部現金化",
+      fact: "特定口座のNASDAQ100を110万円売却注文。",
+      impact: "Project Y：暴落時の買付余力確保として合理的。半導体の含み損を即時確定せずに現金を作った点を評価。"
+    }
+  ],
+  ranking: [
+    ["1","ダイフク",90,"→","監視"],
+    ["2","三井物産",89,"↑2","買い候補"],
+    ["3","フジクラ",88,"↓1","監視"],
+    ["4","島津製作所",86,"→","監視"],
+    ["5","THK",85,"↓4","検証中"],
+    ["6","積水ハウス",84,"→","監視"],
+    ["7","第一三共",83,"NEW","監視"],
+    ["8","三菱重工",82,"→","保有"],
+    ["9","ソニーG",80,"→","保有"],
+    ["10","任天堂",78,"→","待ち"]
+  ],
+  portfolio: [
+    ["221A 日経半導体ETF",89,35,"1,450〜1,475円で段階売却注文"],
+    ["日経半導体投信",87,40,"戻り売り候補"],
+    ["NASDAQ100",78,83,"110万円を一部利確"],
+    ["S&P500",81,32,"コア保有"],
+    ["オルカン",84,10,"長期コア"],
+    ["東ソー",73,34,"会社評価より買い時が課題"]
+  ],
+  actions: {
+    buy: "新規の大口買いは見送り",
+    sell: "221Aを1,450円・1,460円・1,475円で各350株",
+    watch: "ダイフク、三井物産、第一三共、任天堂",
+    hold: "オルカン、S&P500、三菱重工、ソニー"
+  },
+  comment: "最優先は、半導体の戻りを待ちながら暴落対応資金を400〜500万円へ近づけること。全部売却ではなく、段階的な現金化で上昇余地も残す。"
+};
+
+const yen = n => new Intl.NumberFormat("ja-JP",{style:"currency",currency:"JPY",maximumFractionDigits:0}).format(n);
+document.getElementById("asof").textContent = DATA.asOf;
+document.getElementById("assets").textContent = yen(DATA.assets);
+document.getElementById("assetsNote").textContent = DATA.assetsNote;
+document.getElementById("marketScore").textContent = `${DATA.marketScore} / 100`;
+document.getElementById("marketLabel").textContent = DATA.marketLabel;
+
+document.getElementById("news").innerHTML = DATA.news.map(n => `
+  <div class="news">
+    <h3>${n.title}</h3>
+    <div>${n.fact}</div>
+    <div class="impact">${n.impact}</div>
+  </div>`).join("");
+
+document.getElementById("ranking").innerHTML = DATA.ranking.map(r => `
+  <tr><td>${r[0]}</td><td>${r[1]}</td><td class="score">${r[2]}</td><td>${r[3]}</td><td><span class="pill">${r[4]}</span></td></tr>`).join("");
+
+document.getElementById("portfolio").innerHTML = DATA.portfolio.map(r => `
+  <tr><td>${r[0]}</td><td class="score">${r[1]}</td><td class="score">${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+
+document.getElementById("actions").innerHTML = `
+  <div class="action"><b>買い</b><span>${DATA.actions.buy}</span></div>
+  <div class="action"><b>売り</b><span>${DATA.actions.sell}</span></div>
+  <div class="action"><b>監視</b><span>${DATA.actions.watch}</span></div>
+  <div class="action"><b>保有</b><span>${DATA.actions.hold}</span></div>`;
+
+document.getElementById("comment").textContent = DATA.comment;
+
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
