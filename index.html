@@ -50,7 +50,12 @@
       .metric{font-size:24px}table{font-size:13px}
       .portfolio th:nth-child(6),.portfolio td:nth-child(6){display:none}
     }
-  </style>
+  
+.auto-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.quote{background:var(--panel2);border-radius:12px;padding:10px}
+.quote-name{font-weight:700}.quote-price{font-size:18px;font-weight:750;margin-top:3px}
+.auto-note{font-size:11px;color:var(--muted);margin-top:10px}
+</style>
 </head>
 <body>
 <div class="wrap">
@@ -58,6 +63,13 @@
     <div><div class="label">坂田家 資産運用ダッシュボード</div><h1>Project Y</h1></div>
     <div class="asof">2026-07-13 21:28</div>
   </header>
+<section class="card">
+<h2>自動更新マーケット</h2>
+<div class="mini" id="auto-updated">初回実行待ち</div>
+<div class="auto-grid" id="auto-quotes"></div>
+<div class="auto-note">株価・前日比・52週高値からの下落率を自動更新。楽天証券の保有数量・取得単価・評価損益は未連携。</div>
+</section>
+
 
   <section class="card">
     <h2>🧭 Project Y Compass</h2>
@@ -187,7 +199,23 @@
     <div>現在は「買う局面」ではなく、衝動的に増やした半導体比率を段階的に下げ、現金比率をProject Yルールへ戻す局面。次の大きな下落で機械的に買える状態を作る。</div>
   </section>
 
-  <footer>Project Y Dashboard v1.3｜資産比率・決算・売却ロードマップ追加</footer>
+  <footer>Project Y Dashboard v1.4｜市場データ自動更新版</footer>
 </div>
-</body>
+<script>
+(async()=>{
+ const u=document.getElementById('auto-updated'),b=document.getElementById('auto-quotes');
+ try{
+  const r=await fetch('./data.json?v='+Date.now(),{cache:'no-store'}),d=await r.json();
+  u.textContent='最終更新：'+d.updated_at_jst;
+  if(!d.quotes?.length){b.innerHTML='<div class="mini">GitHub Actionsの初回実行後に表示されます。</div>';return;}
+  b.innerHTML=d.quotes.map(q=>{
+   const p=q.change_pct, c=p>=0?'good':'bad', s=p>0?'+':'', unit=q.currency==='JPY'?'円':' USD';
+   return `<div class="quote"><div class="quote-name">${q.name}</div>
+   <div class="quote-price">${Number(q.price).toLocaleString('ja-JP')}${unit}</div>
+   <div class="${c}">${s}${Number(p).toFixed(2)}%</div>
+   <div class="mini">52週高値比 ${Number(q.drawdown_from_52w_high_pct).toFixed(1)}%</div></div>`;
+  }).join('');
+ }catch(e){u.textContent='自動データ読込エラー';b.innerHTML='<div class="mini">'+e.message+'</div>';}
+})();
+</script></body>
 </html>
