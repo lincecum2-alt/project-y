@@ -21,7 +21,7 @@ jobs:
 
       - name: Run updater
         run: |
-          python update_market_data.py
+          python scripts/update_market_data.py
 
       - name: Commit changes
         run: |
