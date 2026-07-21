@@ -1,7 +1,140 @@
 {
   "version": "1.4",
-  "updated_at_jst": "初回実行待ち",
+  "updated_at_jst": "2026-07-22T02:16+09:00",
   "source": "Yahoo Finance chart endpoint (unofficial)",
-  "quotes": [],
+  "quotes": [
+    {
+      "symbol": "8031.T",
+      "name": "三井物産",
+      "currency": "JPY",
+      "price": 4662.0,
+      "change_pct": -1.6,
+      "high_52w": 6659.0,
+      "low_52w": 3030.0,
+      "drawdown_from_52w_high_pct": -29.99,
+      "status": "ok"
+    },
+    {
+      "symbol": "6383.T",
+      "name": "ダイフク",
+      "currency": "JPY",
+      "price": 6225.0,
+      "change_pct": -5.29,
+      "high_52w": 7749.0,
+      "low_52w": 3684.0,
+      "drawdown_from_52w_high_pct": -19.67,
+      "status": "ok"
+    },
+    {
+      "symbol": "6506.T",
+      "name": "安川電機",
+      "currency": "JPY",
+      "price": 5116.0,
+      "change_pct": -6.88,
+      "high_52w": 7655.0,
+      "low_52w": 2867.0,
+      "drawdown_from_52w_high_pct": -33.17,
+      "status": "ok"
+    },
+    {
+      "symbol": "8136.T",
+      "name": "サンリオ",
+      "currency": "JPY",
+      "price": 1204.5,
+      "change_pct": -0.99,
+      "high_52w": 1728.6,
+      "low_52w": 839.0,
+      "drawdown_from_52w_high_pct": -30.32,
+      "status": "ok"
+    },
+    {
+      "symbol": "7011.T",
+      "name": "三菱重工",
+      "currency": "JPY",
+      "price": 3681.0,
+      "change_pct": -3.71,
+      "high_52w": 5195.0,
+      "low_52w": 3405.0,
+      "drawdown_from_52w_high_pct": -29.14,
+      "status": "ok"
+    },
+    {
+      "symbol": "6758.T",
+      "name": "ソニーG",
+      "currency": "JPY",
+      "price": 3470.0,
+      "change_pct": 0.93,
+      "high_52w": 4700.0,
+      "low_52w": 3113.0,
+      "drawdown_from_52w_high_pct": -26.17,
+      "status": "ok"
+    },
+    {
+      "symbol": "4042.T",
+      "name": "東ソー",
+      "currency": "JPY",
+      "price": 2716.0,
+      "change_pct": -1.75,
+      "high_52w": 3046.0,
+      "low_52w": 2168.5,
+      "drawdown_from_52w_high_pct": -10.83,
+      "status": "ok"
+    },
+    {
+      "symbol": "1605.T",
+      "name": "INPEX",
+      "currency": "JPY",
+      "price": 3401.0,
+      "change_pct": -0.82,
+      "high_52w": 4900.0,
+      "low_52w": 2039.0,
+      "drawdown_from_52w_high_pct": -30.59,
+      "status": "ok"
+    },
+    {
+      "symbol": "8593.T",
+      "name": "三菱HCキャピタル",
+      "currency": "JPY",
+      "price": 1390.0,
+      "change_pct": -1.52,
+      "high_52w": 1539.0,
+      "low_52w": 1082.0,
+      "drawdown_from_52w_high_pct": -9.68,
+      "status": "ok"
+    },
+    {
+      "symbol": "1615.T",
+      "name": "NF銀行業",
+      "currency": "JPY",
+      "price": 744.8,
+      "change_pct": 3.59,
+      "high_52w": 765.4,
+      "low_52w": 396.3,
+      "drawdown_from_52w_high_pct": -2.69,
+      "status": "ok"
+    },
+    {
+      "symbol": "221A.T",
+      "name": "日経半導体ETF",
+      "currency": "JPY",
+      "price": 1254.0,
+      "change_pct": 6.91,
+      "high_52w": 1713.0,
+      "low_52w": 424.0,
+      "drawdown_from_52w_high_pct": -26.8,
+      "status": "ok"
+    },
+    {
+      "symbol": "RXRX",
+      "name": "RXRX",
+      "currency": "USD",
+      "price": 3.0558,
+      "change_pct": 5.74,
+      "high_52w": 6.79,
+      "low_52w": 2.84,
+      "drawdown_from_52w_high_pct": -55.0,
+      "status": "ok"
+    }
+  ],
   "errors": []
 }
