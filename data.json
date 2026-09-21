@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "updated_at_jst": "2026-09-21T20:16+09:00",
+  "updated_at_jst": "2026-09-22T02:18+09:00",
   "source": "Yahoo Finance chart endpoint (unofficial)",
   "quotes": [
     {
@@ -128,11 +128,11 @@
       "symbol": "RXRX",
       "name": "RXRX",
       "currency": "USD",
-      "price": 3.83,
-      "change_pct": 8.19,
+      "price": 3.925,
+      "change_pct": 2.48,
       "high_52w": 6.79,
       "low_52w": 2.84,
-      "drawdown_from_52w_high_pct": -43.59,
+      "drawdown_from_52w_high_pct": -42.19,
       "status": "ok"
     }
   ],
