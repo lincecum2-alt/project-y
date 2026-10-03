@@ -1,6 +1,6 @@
 {
   "version": "1.4",
-  "updated_at_jst": "2026-10-03T06:30+09:00",
+  "updated_at_jst": "2026-10-03T11:38+09:00",
   "source": "Yahoo Finance chart endpoint (unofficial)",
   "quotes": [
     {
@@ -106,22 +106,22 @@
       "symbol": "1615.T",
       "name": "NF銀行業",
       "currency": "JPY",
-      "price": 777.6,
-      "change_pct": -2.03,
+      "price": 765.0,
+      "change_pct": -1.62,
       "high_52w": 793.7,
       "low_52w": 443.1,
-      "drawdown_from_52w_high_pct": -2.03,
+      "drawdown_from_52w_high_pct": -3.62,
       "status": "ok"
     },
     {
       "symbol": "221A.T",
       "name": "日経半導体ETF",
       "currency": "JPY",
-      "price": 1235.0,
-      "change_pct": 5.02,
+      "price": 1235.5,
+      "change_pct": 0.04,
       "high_52w": 1713.0,
       "low_52w": 534.8,
-      "drawdown_from_52w_high_pct": -27.9,
+      "drawdown_from_52w_high_pct": -27.88,
       "status": "ok"
     },
     {
